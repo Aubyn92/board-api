@@ -9,7 +9,8 @@ RSpec.describe Post, type: :model do
 end
 
     it { expect(subject).to validate_presence_of(:title) }
-    it { expect(subject).to validate_presence_of(:image_url) }
+    # it { expect(subject).to validate_presence_of(:image_url) }
+    it { expect(subject).to validate_presence_of(:description) }
 end
 
   context 'associations' do
