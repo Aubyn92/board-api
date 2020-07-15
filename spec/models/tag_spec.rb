@@ -12,7 +12,7 @@ end
   # it { expect(subject).to validate_length_of(:name).is_at_least(8).is_at_most(35) }
 end
 
-  context 'associations' do
+  context 'association' do
   it { expect(subject).to have_many(:posts).through(:post_tags) }
   # it { expect(subject).to belong_to(:user) }
  end

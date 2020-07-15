@@ -9,6 +9,7 @@ RSpec.describe Post, type: :model do
 end
 
     it { expect(subject).to validate_presence_of(:title) }
+    it { expect(subject).to validate_length_of(:title).is_at_least(8).is_at_most(75) }
     # it { expect(subject).to validate_presence_of(:image_url) }
     it { expect(subject).to validate_presence_of(:description) }
 end
