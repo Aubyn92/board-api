@@ -5,6 +5,6 @@ FactoryBot.define do
       "testuser#{n}@test.com" 
     end
     username { "Sam" }
-    # password { "Purple1" }
+    password { "Purple1" }
   end
 end

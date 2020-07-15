@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  before_action :authenticate_user, only: %i[create]
     def index
         posts = Post.All
         render json: { posts: posts }
@@ -6,6 +7,7 @@ class PostsController < ApplicationController
 
     def create
         post = Post.new(post_params)
+        trail.user = current_user
         if post.save
           render json: {}, status: :created
         else
