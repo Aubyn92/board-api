@@ -4,18 +4,15 @@ RSpec.describe Post, type: :model do
   subject { build(:post) }
 
   context 'validations' do
-    it 'is valid with valid attributes' do
-      expect(subject).to be_valid
+    it 'has a valid factory' do
+      expect(build(:post)).to be_valid
 end
 
-it 'is not valid without a title' do
-  subject.title = nil
-  expect(subject).to_not be_valid
+    it { expect(subject).to validate_presence_of(:title) }
+    it { expect(subject).to validate_presence_of(:image_url) }
 end
 
-it 'is not valid without an image_url' do
-  subject.image_url = nil
-  expect(subject).to_not be_valid
-end
-end
+  context 'associations' do
+    it { expect(subject).to have_many(:tags).through(:post_tags) }
+ end
 end
