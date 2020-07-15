@@ -1,6 +1,6 @@
 class Post < ApplicationRecord
     validates :title, presence: true  
-    validates :title, length: { maximum: 75, minimum: 8 }
+    # validates :title, length: { maximum: 75, minimum: 8 }
     # validates :image_url, presence: true
     validates :description, presence: true
     has_many :post_tags

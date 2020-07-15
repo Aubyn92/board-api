@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user, only: %i[create]
+  before_action :authenticate_user, only: %i[create update destroy]
     def index
         posts = Post.All
         render json: { posts: posts }
@@ -14,6 +14,22 @@ class PostsController < ApplicationController
           render json: { errors: post.errors.full_messages }, 
                  status: :unprocessable_entity
         end
+      end
+
+      def update
+        post = Post.find(params[:id])
+        if post.update(post_params)
+          render json: {}, status: :no_content
+        else
+          render json: { errors: trail.errors.full_messages },
+                 status: :unprocessable_entity
+        end
+      end
+    
+      def destroy
+        post = Post.find(params[:id])
+        post.delete
+        render json: {}, status: :no_content
       end
     
       private
