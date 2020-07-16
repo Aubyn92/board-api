@@ -7,7 +7,7 @@ class PostsController < ApplicationController
 
     def create
         post = Post.new(post_params)
-        trail.user = current_user
+        post.user = current_user
         if post.save
           render json: {}, status: :created
         else
@@ -21,7 +21,7 @@ class PostsController < ApplicationController
         if post.update(post_params)
           render json: {}, status: :no_content
         else
-          render json: { errors: trail.errors.full_messages },
+          render json: { errors: post.errors.full_messages },
                  status: :unprocessable_entity
         end
       end
