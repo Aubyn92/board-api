@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   before_action :authenticate_user, only: [:create, :update, :destroy]
     def index
         posts = Post.all
-        render json: { posts: posts }
+        render json: posts
     end
 
     def create
