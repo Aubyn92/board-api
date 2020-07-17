@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user, only: %i[create update destroy]
+  before_action :authenticate_user, only: [:create, :update, :destroy]
     def index
-        posts = Post.All
+        posts = Post.all
         render json: { posts: posts }
     end
 
@@ -31,10 +31,19 @@ class PostsController < ApplicationController
         post.delete
         render json: {}, status: :no_content
       end
+
+      def authenticated_header
+        user = create(:user)
+      
+        token = Knock::AuthToken.new(payload: {sub: user.id}).token
+      
+        { 'Authorization': "Bearer #{token}" }
+      end
+      
     
       private
     
       def post_params
-        params.require(:post).permit(:title, :description)
+        params.require(:post).permit(:title, :description, :image_url, :tag)
       end
     end

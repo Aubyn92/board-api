@@ -6,13 +6,19 @@ RSpec.describe "Posts", type: :request do
           @first_post = create(:post)
           @last_post = create(:post)
 
-          get '/posts'
+        get '/posts'
           @json_response = JSON.parse(response.body)
         end
     
         it 'returns http success code' do
           expect(response).to have_http_status(:success)
         end
+
+        # it 'responds successfully' do
+        #   get '/secret', headers: authenticated_header
+        
+        #   expect(response).to have_http_status(:success)
+        # end
     
         it 'JSON response contains the correct number of entries' do
           expect(@json_response['posts'].count).to eq(2)
@@ -56,7 +62,7 @@ RSpec.describe "Posts", type: :request do
             end
         
             it 'returns the correct number of errors' do
-              expect(@json_response['errors'].count).to eq(2)
+              expect(@json_response['errors'].count).to eq(1)
             end
         
             it 'errors contains the correct message' do
@@ -94,7 +100,7 @@ RSpec.describe "Posts", type: :request do
         end
   
         it 'has the correct number of errors' do
-          expect(@json_response['errors'].count).to eq(2)
+          expect(@json_response['errors'].count).to eq(1)
         end
       end
     end
