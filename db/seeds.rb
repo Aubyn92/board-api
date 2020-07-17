@@ -6,10 +6,11 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-
-post.create( title: "I love cookies", description: 'Man I love cookies', tag: "cooking")
-post.create( title: "Board game help", description: 'What do I do', tag: "board games")
-post.create( title: "Give me books to read", description: 'Need new books', tag: "books")
-post.create( title: "Custom Keyboard help", description: 'Where is the best place to get custom parts', tag: "hobbies")
-post.create( title: "I love cats", description: 'I love my cat', tag: "animals")
-post.create( title: "Bonsai help", description: 'I\'ve been growing for a year and need help with cutting', tag: "hobbies")
+user = User.create( username: 'Harley', email: 'h@gmail.com', password: 'orange')
+post = Post.create( title: "I love cookies", description: 'Man I love cookies', user_id: user.id )
+post.tags.create(name: 'cooking')
+# Post.create( title: "Board game help", description: 'What do I do', tag: "board games")
+# Post.create( title: "Give me books to read", description: 'Need new books', tag: "books")
+# Post.create( title: "Custom Keyboard help", description: 'Where is the best place to get custom parts', tag: "hobbies")
+# Post.create( title: "I love cats", description: 'I love my cat', tag: "animals")
+# Post.create( title: "Bonsai help", description: 'I\'ve been growing for a year and need help with cutting', tag: "hobbies")
