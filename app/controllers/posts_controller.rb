@@ -6,7 +6,7 @@ class PostsController < ApplicationController
     def index
         posts = current_user.posts.with_attached_image
         # render json: { posts: posts, current_user: current_user.id }
-        render json: { posts: generate_image_urls(posts), current_user: current_user.email }
+        render json: { posts: posts, posts: generate_image_urls(posts), current_user: current_user.id }
     end
 
     def show 
@@ -65,9 +65,9 @@ class PostsController < ApplicationController
         # id = params[:id]
         # @post = current_user.posts.find_by_id(id)
         @post = Post.find(params[:id])
-      #   if @post == nil
-      #     redirect_to posts_path
-      # end 
+        if @post == nil
+          redirect_to posts_path
+      end 
     end
 
       def generate_image_urls(posts)
