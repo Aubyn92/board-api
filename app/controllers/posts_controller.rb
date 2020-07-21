@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :authenticate_user
+  # before_action :set_user_post, only: [:edit, :update, :destroy]
   before_action :set_post, only: %i[show update destroy update_image]
 
     def index
@@ -61,8 +62,13 @@ class PostsController < ApplicationController
       end
 
       def set_post 
+        # id = params[:id]
+        # @post = current_user.posts.find_by_id(id)
         @post = Post.find(params[:id])
-      end 
+      #   if @post == nil
+      #     redirect_to posts_path
+      # end 
+    end
 
       def generate_image_urls(posts)
         posts.map do |post|
