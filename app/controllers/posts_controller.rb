@@ -42,7 +42,7 @@ class PostsController < ApplicationController
         # render json: "post deleted", status: 200
         post = Post.find(params[:id])
         @post.delete
-        render json: {}, status: :no_content
+        render json: {}, status: :ok
       end
 
       def authenticated_header

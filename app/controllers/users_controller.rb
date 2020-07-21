@@ -1,8 +1,23 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user, only: [:update]
     def create
-      User.create(user_params)
-      render json: "user created", status: 200
+      user = User.create(user_params)
+      if user.save
+        render json: 'user created', status: :created
+      else
+        render json: user.errors.full_messages, status: :unprocessable_entity
     end
+  end
+
+  def update
+    if user_params[:email] == ''
+      current_user.password = user_params[:password]
+    else
+      current_user.email = user_params[:email]
+    end
+    render json: current_user.email, status: :ok if current_user.save
+  end
+
   
     private 
   

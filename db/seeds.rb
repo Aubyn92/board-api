@@ -1,6 +1,6 @@
-pp "Removing Old Records"
-User.destroy_all
-Post.destroy_all
+# pp "Removing Old Records"
+# User.destroy_all
+# Post.destroy_all
 
 pp "Creating Users"
 user1 = User.create( username: 'Harley', email: 'H@gmail.com', password: 'orange')
