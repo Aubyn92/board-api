@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :authenticate_user, only: [:update]
     def create
-      user = User.create(user_params)
+      user = User.new(user_params)
       if user.save
         render json: 'user created', status: :created
       else

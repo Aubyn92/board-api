@@ -1,12 +1,11 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user
-  # before_action :set_user_post, only: [:edit, :update, :destroy]
+  before_action :authenticate_user, only: [:edit, :delete]
   before_action :set_post, only: %i[show update destroy update_image]
 
     def index
         posts = current_user.posts.with_attached_image
         # render json: { posts: posts, current_user: current_user.id }
-        render json: { posts: posts, posts: generate_image_urls(posts), current_user: current_user.id }
+        render json: { posts: generate_image_urls(posts), current_user: current_user.id }
     end
 
     def show 
@@ -18,7 +17,7 @@ class PostsController < ApplicationController
         if post_params[:image]
           render json: { post: post, image: url_for(post.image) }, status: :created
         else
-          render json: { post: post, image: '' }, status: created
+          render json: { post: post, image: '' }, status: :created
         end
       end
 
@@ -33,9 +32,17 @@ class PostsController < ApplicationController
       # end
 
       def update
+        # @post.update(post_params)
+        # render json: 'post updated', status: :ok
+        # post = current_user.posts.update(post_params)
+        # if post_params[:image]
+        #   render json: { post: post, image: url_for(post.image) }, status: :ok
+        # else
+        #   render json: { post: post, image: '' }, status: ok
+        # end
         post = Post.find(params[:id])
         if post.update(post_params)
-          render json: {}, status: :no_content
+        render json: 'post updated', status: :ok
         else
           render json: { errors: post.errors.full_messages },
                  status: :unprocessable_entity
@@ -43,17 +50,21 @@ class PostsController < ApplicationController
       end
     
       def destroy
-        post = Post.find(params[:id])
-        @post.delete
-        render json: {}, status: :ok
+        # post = Post.find(params[:id])
+        @post.destroy
+        render json: 'post deleted', status: :ok
       end
 
-      def authenticated_header
-        user = create(:user)
-        token = Knock::AuthToken.new(payload: {sub: user.id}).token
-        { 'Authorization': "Bearer #{token}" }
-      end
-      
+      # def authenticated_header
+      #   user = create(:user)
+      #   token = Knock::AuthToken.new(payload: {sub: user.id}).token
+      #   { 'Authorization': "Bearer #{token}" }
+      # end
+      # def update_image
+      #   @post.image.purge
+      #   @post.image.attach(post_params[:image])
+      #   render json: url_for(@post.image)
+      # end
     
       private
     
