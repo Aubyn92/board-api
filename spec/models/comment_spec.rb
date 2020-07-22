@@ -9,7 +9,6 @@ RSpec.describe Comment, type: :model do
 end
 
     it { expect(subject).to validate_presence_of(:username) }
-    it { expect(subject).to validate_length_of(:username).is_at_least(5).is_at_most(15) }
     it { expect(subject).to validate_presence_of(:comment) }
 end
 
