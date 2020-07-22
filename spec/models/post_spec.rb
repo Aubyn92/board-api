@@ -16,6 +16,7 @@ end
 
   context 'associations' do
     it { expect(subject).to have_many(:tags).through(:post_tags) }
+    it { expect(subject).to have_many(:comments).through(:post_comments) }
     it { expect(subject).to belong_to(:user) }
  end
 end
