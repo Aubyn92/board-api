@@ -1,10 +1,11 @@
 class PostsController < ApplicationController
   before_action :authenticate_user, only: [:edit, :delete]
   before_action :set_post, only: %i[show update destroy update_image]
+  before_action :authorize_user, only: [:update]
 
     def index
-        posts = current_user.posts.with_attached_image
-        render json: { posts: generate_image_urls(posts), current_user: current_user.id }
+        posts = Post.all.with_attached_image
+        render json: { posts: generate_image_urls(posts) }
     end
 
     def show 
@@ -45,18 +46,21 @@ class PostsController < ApplicationController
         render json: 'post deleted', status: :ok
       end
 
-      # def authenticated_header
-      #   user = create(:user)
-      #   token = Knock::AuthToken.new(payload: {sub: user.id}).token
-      #   { 'Authorization': "Bearer #{token}" }
-      # end
-      # def update_image
-      #   @post.image.purge
-      #   @post.image.attach(post_params[:image])
-      #   render json: url_for(@post.image)
-      # end
+      def update_image
+        @post.image.purge
+        @post.image.attach(post_params[:image])
+        render json: url_for(@post.image)
+      end
     
       private
+
+      def authorize_user
+        if @post.user_id == current.user_id
+          return true
+        else
+          return false
+      end
+    end
     
       def post_params
         params.require(:post).permit(:title, :description, :image, :tag)
