@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
 
   def index
+    # respond_with Comment.all
     @comment = Comment.all
     render json: {comments: comments}, status: 200 
   end
@@ -10,6 +11,7 @@ class CommentsController < ApplicationController
   end
   
   def create
+    # respond_with Comment.create(comment_params)
     @comment = Comment.new(commentParams)
     if @comment.save
       flash[:success] = "Comment successfully added"
@@ -25,7 +27,8 @@ class CommentsController < ApplicationController
   
   private
   
-    def commentParams
-      params.require(:comment).permit(:comment, :post_id, :username)
+    def comment_params
+      params.require(:comment).permit(:username, :comment, :post_id)
+      # params.require(:comment).permit(:comment, :post_id, :username)
     end
   end
