@@ -4,7 +4,6 @@ class PostsController < ApplicationController
 
     def index
         posts = current_user.posts.with_attached_image
-        # render json: { posts: posts, current_user: current_user.id }
         render json: { posts: generate_image_urls(posts), current_user: current_user.id }
     end
 
@@ -32,14 +31,6 @@ class PostsController < ApplicationController
       # end
 
       def update
-        # @post.update(post_params)
-        # render json: 'post updated', status: :ok
-        # post = current_user.posts.update(post_params)
-        # if post_params[:image]
-        #   render json: { post: post, image: url_for(post.image) }, status: :ok
-        # else
-        #   render json: { post: post, image: '' }, status: ok
-        # end
         post = Post.find(params[:id])
         if post.update(post_params)
         render json: 'post updated', status: :ok
@@ -50,7 +41,6 @@ class PostsController < ApplicationController
       end
     
       def destroy
-        # post = Post.find(params[:id])
         @post.destroy
         render json: 'post deleted', status: :ok
       end
@@ -73,8 +63,6 @@ class PostsController < ApplicationController
       end
 
       def set_post 
-        # id = params[:id]
-        # @post = current_user.posts.find_by_id(id)
         @post = Post.find(params[:id])
         if @post == nil
           redirect_to posts_path
