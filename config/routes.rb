@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   put "/users", to: "users#update"
   get "/status", to: "status#index"
   get "/status/user", to: "status#user"
+  get "/profile", to: "users#profile"
 end

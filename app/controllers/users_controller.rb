@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user, only: [:update]
+  before_action :authenticate_user, only: [:update, :profile]
+
     def create
       user = User.new(user_params)
       if user.save
@@ -8,6 +9,11 @@ class UsersController < ApplicationController
         render json: user.errors.full_messages, status: :unprocessable_entity
     end
   end
+
+  def profile
+    @posts = current_user.posts
+    render json: {posts: @posts, user: current_user.id}
+end
 
   def update
     if user_params[:email] == ''
