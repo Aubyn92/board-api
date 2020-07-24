@@ -5,5 +5,5 @@ class Post < ApplicationRecord
     has_many :tags, through: :post_tags
     belongs_to :user
     has_one_attached :image
-    has_many :comments, through: :post_comments
+    has_many :comments
 end
