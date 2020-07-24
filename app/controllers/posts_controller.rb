@@ -32,11 +32,10 @@ class PostsController < ApplicationController
       # end
 
       def update
-        post = Post.find(params[:id])
-        if post.update(post_params)
+        if @post.update(post_params)
         render json: 'post updated', status: :ok
         else
-          render json: { errors: post.errors.full_messages },
+          render json: { errors: @post.errors.full_messages },
                  status: :unprocessable_entity
         end
       end
@@ -55,7 +54,7 @@ class PostsController < ApplicationController
       private
 
       def authorize_user
-        if @post.user_id == current.user_id
+        if @post.user_id == current_user.id
           return true
         else
           return false
@@ -67,11 +66,8 @@ class PostsController < ApplicationController
       end
 
       def set_post 
-        @post = Post.find(params[:id])
-        if @post == nil
-          redirect_to posts_path
-      end 
-    end
+        @post = Post.find(params["id"])
+      end
 
       def generate_image_urls(posts)
         posts.map do |post|
