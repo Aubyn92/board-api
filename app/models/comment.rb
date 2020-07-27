@@ -1,6 +1,7 @@
 class Comment < ApplicationRecord
-    validates :author, presence: true
+    validates :commenter, presence: true
     validates :body, presence: true
-    belong_to :user
+    # made "belong_to :user into belongs_to :user"
+    belongs_to :user
     belongs_to :post
 end

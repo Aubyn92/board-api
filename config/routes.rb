@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-  # resources :posts, only: %i[index create update destroy show]
-  resources :posts
+  resources :posts do
+    resources :comments
+  end
+
   put "/posts/image/:id", to: "posts#update_image"
   post "/login", to: "user_token#create"
   post "/sign-up", to: "users#create"

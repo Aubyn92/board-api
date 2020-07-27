@@ -62,11 +62,11 @@ class PostsController < ApplicationController
     end
     
       def post_params
-        params.require(:post).permit(:title, :description, :image, :tag)
+        params.require(:post).permit(:title, :description, :image, :tag, :like)
       end
 
       def set_post 
-        @post = Post.find(params["id"])
+        @post = Post.find(params[:id])
       end
 
       def generate_image_urls(posts)
