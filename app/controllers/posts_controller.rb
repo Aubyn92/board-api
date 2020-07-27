@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   before_action :authenticate_user, only: [:edit, :delete]
   before_action :set_post, only: %i[show update destroy update_image]
-  before_action :authorize_user, only: [:update]
+  # before_action :authorize_user, only: [:update]
 
     def index
         posts = Post.all.with_attached_image
