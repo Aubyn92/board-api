@@ -1,15 +1,22 @@
 class PostsController < ApplicationController
   before_action :authenticate_user, only: [:edit, :delete]
   before_action :set_post, only: %i[show update destroy update_image]
-  # before_action :authorize_user, only: [:update]
 
     def index
         posts = Post.all.with_attached_image
-        render json: { posts: generate_image_urls(posts) }
+        posts_with_comments = posts.map do |post|
+          comments = post.comments
+          if post.image.attached?
+            post.attributes.merge(comments: comments, image: url_for(post.image))
+          else
+            post.attributes.merge(comments: comments)
+          end
+        end
+        render json: { posts: posts_with_comments }
     end
 
     def show 
-      render json: @post
+      render json: {post: @post, comments: @post.comments}
     end 
 
     def create
@@ -71,8 +78,9 @@ class PostsController < ApplicationController
 
       def generate_image_urls(posts)
         posts.map do |post|
-          if post.image.attached?
-            post.attributes.merge(image: url_for(post.image))
+          original_post = Post.find(post["id"])
+          if original_post.image.attached?
+            post[:image] = url_for(original_post.image) 
           else
             post
           end

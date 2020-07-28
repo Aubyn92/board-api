@@ -1,8 +1,12 @@
 class CommentsController < ApplicationController
+  before_action :authenticate_user, only: [:create]
+
   def create
     @post = Post.find(params[:post_id])
-    @comment = @post.comments.create(comment_params)
-    redirect_to post_path(@post)
+    @comment = @post.comments.new(comment_params)
+    @comment.commenter = current_user.email
+    @comment.save
+    render json: @comment
   end
  
   private
