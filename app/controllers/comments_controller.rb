@@ -16,6 +16,7 @@ class CommentsController < ApplicationController
     @comment.commenter = current_user.username
     @comment.save
     render json: @comment
+    redirect_to post_path(@post)
   end
 
   def destroy
