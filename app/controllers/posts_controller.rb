@@ -28,16 +28,6 @@ class PostsController < ApplicationController
         end
       end
 
-        # post = Post.new(post_params)
-      #   post.user = current_user
-      #   if post.save
-      #     render json: {}, status: :created
-      #   else
-      #     render json: { errors: post.errors.full_messages }, 
-      #            status: :unprocessable_entity
-      #   end
-      # end
-
       def update
         if @post.update(post_params)
         render json: 'post updated', status: :ok
