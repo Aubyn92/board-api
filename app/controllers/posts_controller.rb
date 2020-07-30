@@ -7,16 +7,16 @@ class PostsController < ApplicationController
         posts_with_comments = posts.map do |post|
           comments = post.comments
           if post.image.attached?
-            post.attributes.merge(comments: comments, image: url_for(post.image))
+             post.attributes.merge(comments: comments, image: url_for(post.image))
           else
-            post.attributes.merge(comments: comments)
+             post.attributes.merge(comments: comments)
           end
         end
         render json: { posts: posts_with_comments }
     end
 
     def show 
-      render json: {post: @post, comments: @post.comments}
+        render json: {post: @post, comments: @post.comments}
     end 
 
     def create
